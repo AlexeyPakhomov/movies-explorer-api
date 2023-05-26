@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { regexUrl } = require("../utils/constants");
+const { URL_ERR } = require("../utils/errors");
 
 const schema = new Schema(
   {
@@ -28,7 +29,7 @@ const schema = new Schema(
       required: true,
       validate: {
         validator: (v) => regexUrl.test(v),
-        message: "Некорректная ссылка",
+        message: URL_ERR,
       },
     },
     trailerLink: {
@@ -36,7 +37,7 @@ const schema = new Schema(
       required: true,
       validate: {
         validator: (v) => regexUrl.test(v),
-        message: "Некорректная ссылка",
+        message: URL_ERR,
       },
     },
     thumbnail: {
@@ -44,7 +45,7 @@ const schema = new Schema(
       required: true,
       validate: {
         validator: (v) => regexUrl.test(v),
-        message: "Некорректная ссылка",
+        message: URL_ERR,
       },
     },
     owner: {

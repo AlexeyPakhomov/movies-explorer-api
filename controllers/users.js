@@ -7,6 +7,12 @@ const { NotFoundError } = require("../errors/not-found-err"); // 404
 const {
   ConflictingRequestError,
 } = require("../errors/conflicting-request-err"); // 409
+const {
+  BAD_REQUEST_ERR,
+  DUPLICATE_USER_ERR,
+  NOT_FOUND_USER_ERR,
+  NOT_FOUND_USER_ID_ERR,
+} = require("../utils/errors");
 
 const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -28,16 +34,10 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
-        return next(
-          new BadRequestError(
-            "Переданы некорректные данные при создании пользователя."
-          )
-        );
+        return next(new BadRequestError(BAD_REQUEST_ERR));
       }
       if (err.code === 11000) {
-        return next(
-          new ConflictingRequestError("Такой пользователь уже существует.")
-        );
+        return next(new ConflictingRequestError(DUPLICATE_USER_ERR));
       }
       return next(err);
     });
@@ -62,7 +62,7 @@ const getInfAboutUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        return next(new NotFoundError("Информация о пользователе отсутствует"));
+        return next(new NotFoundError(NOT_FOUND_USER_ERR));
       }
       return res.send(user);
     })
@@ -78,19 +78,13 @@ const updateProfile = (req, res, next) => {
   )
     .then((user) => {
       if (!user) {
-        return next(
-          new NotFoundError("Пользователь с указанным _id не найден.")
-        );
+        return next(new NotFoundError(NOT_FOUND_USER_ID_ERR));
       }
       return res.send(user);
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
-        return next(
-          new BadRequestError(
-            "Переданы некорректные данные при обновлении профиля."
-          )
-        );
+        return next(new BadRequestError(BAD_REQUEST_ERR));
       }
       return next(err);
     });

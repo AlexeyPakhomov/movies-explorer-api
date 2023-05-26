@@ -1,7 +1,8 @@
-const { Schema, model } = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
-const { UnauthorizedError } = require('../errors/unauthorized-err'); // 401
+const { Schema, model } = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
+const { UnauthorizedError } = require("../errors/unauthorized-err"); // 401
+const { EMAIL_ERR, AUTHORIZATION_DATA_ERR } = require("../utils/errors");
 
 const schema = new Schema(
   {
@@ -11,7 +12,7 @@ const schema = new Schema(
       unique: true,
       validate: {
         validator: (v) => validator.isEmail(v),
-        message: 'Неправильный формат почты',
+        message: EMAIL_ERR,
       },
     },
     password: {
@@ -23,29 +24,29 @@ const schema = new Schema(
       type: String,
       minlength: 2,
       maxlength: 30,
-      default: 'Александр',
+      default: "Александр",
     },
   },
   {
     versionKey: false,
-  },
+  }
 );
 
 schema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })
-    .select('+password')
+    .select("+password")
     .then((user) => {
       if (!user) {
-        return Promise.reject(new UnauthorizedError('Неправильная почта'));
+        return Promise.reject(new UnauthorizedError(AUTHORIZATION_DATA_ERR));
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new UnauthorizedError('Неправильный пароль'));
+          return Promise.reject(new UnauthorizedError(AUTHORIZATION_DATA_ERR));
         }
         return user;
       });
     });
 };
 
-module.exports = model('user', schema);
+module.exports = model("user", schema);
