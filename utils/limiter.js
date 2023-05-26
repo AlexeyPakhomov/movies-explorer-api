@@ -1,6 +1,5 @@
-const { RATE_LIMIT_ERR } = require("../utils/errors");
-
-const rateLimit = require("express-rate-limit");
+const rateLimit = require('express-rate-limit');
+const { RATE_LIMIT_ERR } = require('./errors');
 
 const limiter = rateLimit({
   windowMs: 8 * 60 * 1000, // 8 минут
@@ -12,10 +11,10 @@ const limiter = rateLimit({
 
 // Генерация секретных ключей
 
-//const crypto = require("crypto"); // экспортируем crypto
-//const randomString = crypto
+// const crypto = require("crypto"); // экспортируем crypto
+// const randomString = crypto
 //  .randomBytes(32) // сгенерируем случайную последовательность 16 байт (128 бит)
 //  .toString("hex"); // приведём её к строке
-//console.log(randomString);
+// console.log(randomString);
 
 module.exports = { limiter };

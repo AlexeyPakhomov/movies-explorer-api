@@ -1,4 +1,4 @@
-const { SERVER_ERR } = require("../utils/errors");
+const { SERVER_ERR } = require('../utils/errors');
 
 const error = (err, req, res, next) => {
   // если у ошибки нет статуса, выставляем 500

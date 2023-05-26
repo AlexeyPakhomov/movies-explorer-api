@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
-const { regexUrl } = require("../utils/constants");
-const { URL_ERR } = require("../utils/errors");
+const { Schema, model } = require('mongoose');
+const { regexUrl } = require('../utils/constants');
+const { URL_ERR } = require('../utils/errors');
 
 const schema = new Schema(
   {
@@ -50,7 +50,7 @@ const schema = new Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
     movieId: {
@@ -68,7 +68,7 @@ const schema = new Schema(
   },
   {
     versionKey: false,
-  }
+  },
 );
 
-module.exports = model("movie", schema);
+module.exports = model('movie', schema);
