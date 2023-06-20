@@ -24,7 +24,7 @@ const schema = new Schema(
       type: String,
       minlength: 2,
       maxlength: 30,
-      default: 'Александр',
+      required: true,
     },
   },
   {

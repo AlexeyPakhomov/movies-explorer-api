@@ -85,6 +85,9 @@ const updateProfile = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError(BAD_REQUEST_ERR));
       }
+      if (err.code === 11000) {
+        return next(new ConflictingRequestError(DUPLICATE_USER_ERR));
+      }
       return next(err);
     });
 };
