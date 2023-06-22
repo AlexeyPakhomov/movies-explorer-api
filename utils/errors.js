@@ -12,6 +12,7 @@ const URL_ERR = 'Некорректная ссылка';
 const EMAIL_ERR = 'Неправильный формат почты';
 const AUTHORIZATION_DATA_ERR = 'Неправильная почта или пароль';
 const PAGE_NOT_FOUND = 'Страница не найдена';
+const NAME_ERR = 'Имя не соответствует требованиям проверки';
 
 module.exports = {
   BAD_REQUEST_ERR,
@@ -28,4 +29,5 @@ module.exports = {
   EMAIL_ERR,
   AUTHORIZATION_DATA_ERR,
   PAGE_NOT_FOUND,
+  NAME_ERR,
 };

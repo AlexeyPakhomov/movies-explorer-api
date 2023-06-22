@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
-const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { UnauthorizedError } = require('../errors/unauthorized-err'); // 401
-const { EMAIL_ERR, AUTHORIZATION_DATA_ERR } = require('../utils/errors');
+const { EMAIL_ERR, AUTHORIZATION_DATA_ERR, NAME_ERR } = require('../utils/errors');
+const { PATTERN_EMAIL, PATTERN_NAME } = require('../utils/constants');
 
 const schema = new Schema(
   {
@@ -11,7 +11,7 @@ const schema = new Schema(
       required: true,
       unique: true,
       validate: {
-        validator: (v) => validator.isEmail(v),
+        validator: (v) => PATTERN_EMAIL.test(v),
         message: EMAIL_ERR,
       },
     },
@@ -25,6 +25,10 @@ const schema = new Schema(
       minlength: 2,
       maxlength: 30,
       required: true,
+      validate: {
+        validator: (v) => PATTERN_NAME.test(v),
+        message: NAME_ERR,
+      },
     },
   },
   {

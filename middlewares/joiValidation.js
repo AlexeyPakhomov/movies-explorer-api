@@ -1,25 +1,28 @@
 const { celebrate, Joi } = require('celebrate');
-const { regexUrl } = require('../utils/constants');
+const { regexUrl, PATTERN_EMAIL, PATTERN_NAME } = require('../utils/constants');
 
 const joiSignUp = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
+    name: Joi.string().required().min(2).max(30)
+      .regex(PATTERN_NAME),
+    email: Joi.string().required().regex(PATTERN_EMAIL),
     password: Joi.string().required(),
   }),
 });
 
 const joiSignIn = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
+    // email: Joi.string().required().email(),
+    email: Joi.string().required().regex(PATTERN_EMAIL),
     password: Joi.string().required(),
   }),
 });
 
 const joiUpdateProfile = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
+    name: Joi.string().required().min(2).max(30)
+      .regex(PATTERN_NAME),
+    email: Joi.string().required().regex(PATTERN_EMAIL),
   }),
 });
 
